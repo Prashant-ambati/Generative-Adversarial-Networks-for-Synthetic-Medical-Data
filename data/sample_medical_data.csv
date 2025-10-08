@@ -1,0 +1,6 @@
+age,bmi,blood_pressure_systolic,blood_pressure_diastolic,cholesterol,glucose,heart_rate,temperature,respiratory_rate,oxygen_saturation,white_blood_cells,red_blood_cells,hemoglobin,platelets,creatinine,sodium,potassium,chloride,co2,bun,condition,gender
+45.2,24.1,118,78,195,92,68,98.4,16,98,6800,4.2,13.5,245000,0.9,140,4.1,101,24,12,healthy,M
+52.8,27.3,142,88,245,156,75,98.7,18,97,7200,4.5,14.2,280000,1.1,138,4.3,99,22,18,diabetes,F
+38.1,22.5,115,75,180,88,65,98.2,15,99,6500,4.1,12.8,230000,0.8,142,3.9,102,25,10,healthy,F
+61.4,29.8,158,95,285,178,82,99.1,20,96,8100,4.8,15.1,320000,1.4,136,4.6,97,20,22,hypertension,M
+47.6,25.9,125,82,210,98,72,98.6,17,98,7000,4.3,13.8,260000,1.0,139,4.2,100,23,14,healthy,M

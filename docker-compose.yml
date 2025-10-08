@@ -1,0 +1,33 @@
+# Docker Compose for Synthetic Medical Data GAN
+# Built by Prashant Ambati
+
+version: '3.8'
+
+services:
+  synthetic-medical-gan:
+    build: .
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/app/data
+      - ./results:/app/results
+      - ./models:/app/models
+      - ./checkpoints:/app/checkpoints
+    environment:
+      - PYTHONPATH=/app/src
+    restart: unless-stopped
+    
+  # Optional: Jupyter notebook service for analysis
+  jupyter:
+    build: .
+    command: jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token=''
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./notebooks:/app/notebooks
+      - ./data:/app/data
+      - ./results:/app/results
+    environment:
+      - PYTHONPATH=/app/src
+    profiles:
+      - jupyter
