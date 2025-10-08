@@ -23,7 +23,7 @@ Your **Synthetic Medical Data GAN** project has been successfully pushed to GitH
 5. Set main file: `streamlit_app.py`
 6. Click "Deploy!"
 
-**Your app will be live at**: `https://your-app-name.streamlit.app`
+**Your app is now live at**: https://generative-adversarial-networks-for-synthetic-medical-data-3tg.streamlit.app
 
 ### 2. Local Testing
 ```bash
@@ -99,7 +99,7 @@ Your deployed app will demonstrate:
 - "Demonstrated advanced ML techniques for healthcare AI applications"
 
 ### Links to Include
-- **Live Demo**: `https://your-streamlit-app.streamlit.app`
+- **Live Demo**: https://generative-adversarial-networks-for-synthetic-medical-data-3tg.streamlit.app
 - **GitHub Repository**: https://github.com/Prashant-ambati/Generative-Adversarial-Networks-for-Synthetic-Medical-Data
 - **Technical Documentation**: Link to README and project summary
 

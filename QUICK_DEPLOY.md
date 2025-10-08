@@ -15,7 +15,7 @@
    - Python version: `3.9`
 
 ### Step 2: Access Your App
-- Your app will be available at: `https://your-app-name.streamlit.app`
+- Your app will be available at: `https://generative-adversarial-networks-for-synthetic-medical-data-3tg.streamlit.app`
 - Share the link for your portfolio/resume!
 
 ## 🐳 Docker Deployment
@@ -95,8 +95,8 @@ The dashboard is fully responsive and works on:
 
 ### Resume Links
 Add these to your resume/portfolio:
-- **Live Demo**: `https://your-app-name.streamlit.app`
-- **GitHub Repo**: `https://github.com/Prashant-ambati/Generative-Adversarial-Networks-for-Synthetic-Medical-Data`
+- **Live Demo**: https://generative-adversarial-networks-for-synthetic-medical-data-3tg.streamlit.app
+- **GitHub Repo**: https://github.com/Prashant-ambati/Generative-Adversarial-Networks-for-Synthetic-Medical-Data
 - **Documentation**: Link to README.md
 
 ### Key Talking Points

@@ -2,7 +2,7 @@
 
 **Built by Prashant Ambati**
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://your-streamlit-app-url.streamlit.app)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://generative-adversarial-networks-for-synthetic-medical-data-3tg.streamlit.app)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=flat&logo=pytorch&logoColor=white)](https://pytorch.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -57,7 +57,7 @@ seaborn>=0.11.0
 
 ## 🚀 Live Demo
 
-**[🌐 Try the Interactive Dashboard](https://your-streamlit-app-url.streamlit.app)**
+**[🌐 Try the Interactive Dashboard](https://generative-adversarial-networks-for-synthetic-medical-data-3tg.streamlit.app)**
 
 Experience the GAN in action with real-time synthetic data generation!
 
@@ -142,8 +142,9 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 📧 Contact
 
 **Prashant Ambati**
-- GitHub: [@prashantambati](https://github.com/prashantambati)
-- Project Link: [https://github.com/prashantambati/synthetic-medical-gan](https://github.com/prashantambati/synthetic-medical-gan)
+- GitHub: [@Prashant-ambati](https://github.com/Prashant-ambati)
+- Live Demo: [Synthetic Medical Data GAN](https://generative-adversarial-networks-for-synthetic-medical-data-3tg.streamlit.app)
+- Project Link: [GitHub Repository](https://github.com/Prashant-ambati/Generative-Adversarial-Networks-for-Synthetic-Medical-Data)
 
 ---
 
