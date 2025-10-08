@@ -55,7 +55,7 @@ Thumbs.db
 
 # Project specific
 checkpoints/
-models/
+/models/
 results/
 logs/
 data/*.csv
