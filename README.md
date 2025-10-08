@@ -2,6 +2,12 @@
 
 **Built by Prashant Ambati**
 
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://your-streamlit-app-url.streamlit.app)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=flat&logo=pytorch&logoColor=white)](https://pytorch.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub stars](https://img.shields.io/github/stars/Prashant-ambati/Generative-Adversarial-Networks-for-Synthetic-Medical-Data?style=social)](https://github.com/Prashant-ambati/Generative-Adversarial-Networks-for-Synthetic-Medical-Data/stargazers)
+
 ## Overview
 
 A Generative Adversarial Network (GAN) framework for generating privacy-preserving synthetic medical data. Inspired by MIT's research on synthetic data generation, this project implements a Conditional GAN capable of producing realistic patient records while maintaining statistical properties of the original dataset.
@@ -49,12 +55,18 @@ scikit-learn>=1.0.0
 seaborn>=0.11.0
 ```
 
+## 🚀 Live Demo
+
+**[🌐 Try the Interactive Dashboard](https://your-streamlit-app-url.streamlit.app)**
+
+Experience the GAN in action with real-time synthetic data generation!
+
 ## 🚀 Quick Start
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/prashantambati/synthetic-medical-gan.git
-cd synthetic-medical-gan
+git clone https://github.com/Prashant-ambati/Generative-Adversarial-Networks-for-Synthetic-Medical-Data.git
+cd Generative-Adversarial-Networks-for-Synthetic-Medical-Data
 ```
 
 2. **Install dependencies**

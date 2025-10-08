@@ -33,4 +33,4 @@ ENV STREAMLIT_SERVER_ADDRESS=0.0.0.0
 EXPOSE 8501
 
 # Default command to run the dashboard
-CMD ["streamlit", "run", "dashboard/app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+CMD ["streamlit", "run", "streamlit_app.py", "--server.port=8501", "--server.address=0.0.0.0"]
