@@ -46,8 +46,7 @@ class StatisticalEvaluator:
             real_feature = real_data[:, i]
             synthetic_feature = synthetic_data[:, i]
             
-            # Perform KS test
-            ks_statistic, p_value = stats.kstest(synthetic_feature, real_feature)
+            ks_statistic, p_value = stats.ks_2samp(real_feature, synthetic_feature)
             
             ks_results[feature_name] = {
                 'ks_statistic': ks_statistic,

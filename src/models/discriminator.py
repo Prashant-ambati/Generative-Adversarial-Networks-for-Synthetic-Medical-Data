@@ -34,8 +34,7 @@ class Discriminator(nn.Module):
         for hidden_dim in hidden_dims:
             layers.extend([
                 nn.Linear(prev_dim, hidden_dim),
-                nn.LeakyReLU(0.2, inplace=True),
-                nn.Dropout(0.3)
+                nn.LeakyReLU(0.2, inplace=True)
             ])
             prev_dim = hidden_dim
         

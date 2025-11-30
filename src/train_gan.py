@@ -4,10 +4,16 @@ Built by Prashant Ambati
 """
 
 import torch
+import torch.backends.cudnn as cudnn
 import numpy as np
 import matplotlib.pyplot as plt
 import argparse
 import os
+try:
+    import joblib
+except Exception:
+    joblib = None
+import pickle
 from tqdm import tqdm
 
 from models.conditional_gan import ConditionalWGAN
@@ -101,6 +107,23 @@ def train_gan(args):
     os.makedirs('models', exist_ok=True)
     gan.save_model('models/final_gan_model.pth')
     print("Training completed! Final model saved.")
+
+    # Save preprocessing artifacts
+    artifacts = {
+        'scaler': data_loader.scaler,
+        'label_encoders': data_loader.label_encoders,
+        'onehot_encoder': getattr(data_loader, 'onehot_encoder', None)
+    }
+    preprocess_path = 'models/preprocessing.joblib'
+    try:
+        if joblib is not None:
+            joblib.dump(artifacts, preprocess_path)
+        else:
+            with open(preprocess_path, 'wb') as f:
+                pickle.dump(artifacts, f)
+        print(f"Preprocessing artifacts saved to {preprocess_path}")
+    except Exception as e:
+        print(f"Failed to save preprocessing artifacts: {e}")
     
     # Final evaluation
     print("Performing final evaluation...")
@@ -224,6 +247,8 @@ def main():
     # Set random seeds
     torch.manual_seed(args.seed)
     np.random.seed(args.seed)
+    cudnn.deterministic = True
+    cudnn.benchmark = False
     
     # Train the GAN
     train_gan(args)

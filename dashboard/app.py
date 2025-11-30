@@ -14,6 +14,11 @@ from plotly.subplots import make_subplots
 import torch
 import sys
 import os
+import pickle
+try:
+    import joblib
+except Exception:
+    joblib = None
 
 # Add src to path for imports
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
@@ -63,15 +68,57 @@ def load_sample_data():
     return df
 
 
-@st.cache_data
-def generate_synthetic_data(num_samples, condition_type):
-    """Generate synthetic data using pre-trained model or simulation."""
-    # For demo purposes, we'll simulate the GAN output
-    # In a real deployment, you would load the trained model
-    
+@st.cache_resource
+def load_resources():
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    wgan = None
+    artifacts = None
+    model_path = os.path.join(os.path.dirname(__file__), '..', 'models', 'final_gan_model.pth')
+    preprocess_path = os.path.join(os.path.dirname(__file__), '..', 'models', 'preprocessing.joblib')
+    try:
+        if os.path.exists(preprocess_path):
+            if joblib is not None:
+                artifacts = joblib.load(preprocess_path)
+            else:
+                with open(preprocess_path, 'rb') as f:
+                    artifacts = pickle.load(f)
+        if artifacts:
+            data_dim = len(artifacts['scaler'].mean_) if artifacts.get('scaler') is not None else 20
+            cond_cats = artifacts.get('onehot_encoder').categories_ if artifacts.get('onehot_encoder') is not None else []
+            condition_dim = sum(len(c) for c in cond_cats) if cond_cats else 10
+            wgan = ConditionalWGAN(
+                noise_dim=100,
+                condition_dim=condition_dim,
+                data_dim=data_dim,
+                device=device
+            )
+            if os.path.exists(model_path):
+                wgan.load_model(model_path)
+    except Exception:
+        wgan = None
+        artifacts = None
+    return wgan, artifacts, device
+
+def generate_synthetic_data(num_samples, condition_type, gender, wgan, artifacts, device):
+    if wgan is not None and artifacts is not None:
+        le_condition = artifacts['label_encoders'].get('condition') if artifacts.get('label_encoders') else None
+        le_gender = artifacts['label_encoders'].get('gender') if artifacts.get('label_encoders') else None
+        onehot = artifacts.get('onehot_encoder')
+        scaler = artifacts.get('scaler')
+        if le_condition and le_gender and onehot and scaler:
+            cond_int = le_condition.transform([condition_type])[0]
+            gen_int = le_gender.transform([gender])[0]
+            cond_matrix = np.array([[cond_int, gen_int]])
+            cond_onehot = onehot.transform(cond_matrix)
+            cond_tensor = torch.FloatTensor(cond_onehot).to(device)
+            synthetic_scaled = wgan.generate_synthetic_data(num_samples, cond_tensor.repeat(num_samples, 1)).cpu().numpy()
+            synthetic = scaler.inverse_transform(synthetic_scaled)
+            feature_cols = ['age','bmi','blood_pressure_systolic','blood_pressure_diastolic','cholesterol','glucose','heart_rate','temperature','respiratory_rate','oxygen_saturation','white_blood_cells','red_blood_cells','hemoglobin','platelets','creatinine','sodium','potassium','chloride','co2','bun']
+            df = pd.DataFrame(synthetic, columns=feature_cols)
+            df['condition'] = condition_type
+            df['gender'] = gender
+            return df
     np.random.seed(42)
-    
-    # Simulate different conditions affecting the data distribution
     if condition_type == 'healthy':
         age_mean, age_std = 35, 10
         bmi_mean, bmi_std = 23, 3
@@ -84,11 +131,10 @@ def generate_synthetic_data(num_samples, condition_type):
         age_mean, age_std = 60, 15
         bmi_mean, bmi_std = 27, 4
         bp_sys_mean, bp_sys_std = 150, 20
-    else:  # heart_disease
+    else:
         age_mean, age_std = 65, 10
         bmi_mean, bmi_std = 29, 6
         bp_sys_mean, bp_sys_std = 145, 18
-    
     synthetic_data = {
         'age': np.random.normal(age_mean, age_std, num_samples).clip(18, 90),
         'bmi': np.random.normal(bmi_mean, bmi_std, num_samples).clip(15, 50),
@@ -97,9 +143,9 @@ def generate_synthetic_data(num_samples, condition_type):
         'cholesterol': np.random.normal(200, 40, num_samples).clip(100, 400),
         'glucose': np.random.normal(100, 25, num_samples).clip(70, 300),
         'heart_rate': np.random.normal(70, 15, num_samples).clip(50, 120),
-        'condition': [condition_type] * num_samples
+        'condition': [condition_type] * num_samples,
+        'gender': [gender] * num_samples
     }
-    
     return pd.DataFrame(synthetic_data)
 
 
@@ -123,6 +169,7 @@ def main():
         "Medical Condition",
         ['healthy', 'diabetes', 'hypertension', 'heart_disease']
     )
+    gender = st.sidebar.selectbox("Gender", ['M','F'])
     
     # Visualization controls
     st.sidebar.subheader("Visualization")
@@ -145,9 +192,9 @@ def main():
         # Load real data for comparison
         real_data = load_sample_data()
         
-        # Generate synthetic data
+        wgan, artifacts, device = load_resources()
         if 'generate_data' in st.session_state or st.sidebar.button("Generate Sample"):
-            synthetic_data = generate_synthetic_data(num_samples, condition_type)
+            synthetic_data = generate_synthetic_data(num_samples, condition_type, gender, wgan, artifacts, device)
             
             # Display basic statistics
             st.subheader("📈 Generated Data Statistics")

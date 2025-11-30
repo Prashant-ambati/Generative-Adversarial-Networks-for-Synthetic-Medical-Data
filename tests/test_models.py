@@ -38,7 +38,6 @@ class TestGenerator:
         output = generator(noise, condition)
         
         assert output.shape == (batch_size, 20)
-        assert torch.all(output >= -1) and torch.all(output <= 1)  # Tanh output
     
     def test_generator_sample_generation(self):
         """Test sample generation method."""

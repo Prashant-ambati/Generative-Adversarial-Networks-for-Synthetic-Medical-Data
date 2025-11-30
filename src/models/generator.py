@@ -42,9 +42,7 @@ class Generator(nn.Module):
             ])
             prev_dim = hidden_dim
         
-        # Output layer
         layers.append(nn.Linear(prev_dim, output_dim))
-        layers.append(nn.Tanh())  # Normalize output to [-1, 1]
         
         self.network = nn.Sequential(*layers)
         

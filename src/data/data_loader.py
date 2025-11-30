@@ -61,6 +61,7 @@ class MedicalDataLoader:
         self.random_state = random_state
         self.scaler = StandardScaler()
         self.label_encoders = {}
+        self.onehot_encoder = None
         
     def create_synthetic_medical_data(self, n_samples=10000):
         """
@@ -144,10 +145,13 @@ class MedicalDataLoader:
         # Combine conditions into one-hot encoding
         condition_matrix = np.column_stack(conditions) if conditions else np.zeros((len(df), 1))
         
-        # Convert to one-hot for conditions
         from sklearn.preprocessing import OneHotEncoder
-        onehot = OneHotEncoder(sparse=False)
+        try:
+            onehot = OneHotEncoder(sparse_output=False)
+        except TypeError:
+            onehot = OneHotEncoder(sparse=False)
         conditions_onehot = onehot.fit_transform(condition_matrix)
+        self.onehot_encoder = onehot
         
         return X_scaled, conditions_onehot, df
     
